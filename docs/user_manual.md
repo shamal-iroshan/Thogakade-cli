@@ -4,15 +4,22 @@
 
 ### Register
 ```
-user register <username> <password>
+--type user register <username> <password> <role>
 ```
 
 ### Login
 ```
-user login <username> <password>
+--type user login <username> <password>
 ```
 
 ### View Current User
 ```
-user current
+--type user current
+```
+
+## Item
+
+### Add
+```
+--type item add <name> <buyingPrice> <sellingPrice>
 ```

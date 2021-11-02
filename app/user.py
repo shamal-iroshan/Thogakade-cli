@@ -5,7 +5,7 @@ __user_db_location__ = "db/users"
 __current_session_location__ = "db/session"
 
 def register(params):
-    if len(params) == 2:
+    if len(params) == 3:
         if not os.path.isdir(__user_db_location__):
             os.makedirs(__user_db_location__)
         else:
@@ -14,7 +14,8 @@ def register(params):
             else:
                 _data_ = {
                     "username": params[0],
-                    "password": params[1]
+                    "password": params[1],
+                    "role": params[2]
                 }
                 with open(f"{__user_db_location__}/{params[0]}.db", "w") as user_file:
                     json.dump(_data_, user_file)
@@ -34,13 +35,15 @@ def login(params):
                     if not os.path.isdir(__current_session_location__):
                         os.makedirs(__current_session_location__)
                         _session_ = {
-                            "username": _data_["username"]
+                            "username": _data_["username"],
+                            "role": _data_["role"]
                         }
                         with open(f"{__current_session_location__}/current_session.db", "w") as session_file:
                             json.dump(_session_, session_file)
                     else:
                         _session_ = {
-                            "username": _data_["username"]
+                            "username": _data_["username"],
+                            "role": _data_["role"]
                         }
                         with open(f"{__current_session_location__}/current_session.db", "w") as session_file:
                             json.dump(_session_, session_file)
