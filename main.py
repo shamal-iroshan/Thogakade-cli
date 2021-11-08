@@ -1,6 +1,6 @@
 import sys
 from app.user import register, login, current
-from app.items import addItem, viewAll, viewSingleItem
+from app.items import addItem, viewAll, viewSingleItem, deleteItem
 import click
 
 @click.command()
@@ -22,6 +22,8 @@ def hello(type, operation, params):
             viewAll()
         elif operation == "view":
             viewSingleItem(params)
+        elif operation == "delete":
+            deleteItem(params)
     else:
         print("Error")
 

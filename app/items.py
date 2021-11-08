@@ -55,6 +55,29 @@ def viewSingleItem(params):
     table.add_row(item_arr)
     print(table)
 
+def deleteItem(params):
+    if os.path.isfile(__current_session_location__):
+        userRole = ""
+        with open(__current_session_location__, "r") as item_file:
+            _data_ = json.load(item_file)
+            userRole = _data_["role"]
+
+        if userRole == "admin":
+            if len(params) == 1:
+                file_path = f"{__item_db_location__}/{params[0]}.db"
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                    print("Item deleted")
+                else:
+                    print("Item does not exist")
+            else:
+                print("check your command")
+        else:
+            print("You don't have permission")
+
+    else:
+        print("No current session, please login")
+
 
 # utility functions
 
