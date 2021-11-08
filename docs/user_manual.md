@@ -23,3 +23,11 @@
 ```
 --type item add <name> <buyingPrice> <sellingPrice>
 ```
+### View All
+```
+--type item view-all
+```
+### View Single Item
+```
+--type item view <id>
+```

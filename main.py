@@ -1,6 +1,6 @@
 import sys
 from app.user import register, login, current
-from app.items import addItem
+from app.items import addItem, viewAll, viewSingleItem
 import click
 
 @click.command()
@@ -18,6 +18,12 @@ def hello(type, operation, params):
     elif type == "item":
         if operation == "add":
             addItem(params)
+        elif operation == "view-all":
+            viewAll()
+        elif operation == "view":
+            viewSingleItem(params)
+    else:
+        print("Error")
 
 if __name__ == '__main__':
     hello()

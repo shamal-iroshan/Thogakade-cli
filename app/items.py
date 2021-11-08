@@ -1,9 +1,12 @@
 import os
 import json
+from prettytable import PrettyTable
 
 __item_db_location__ = "db/items"
 __current_session_location__ = "db/session/current_session.db"
 __item_last_id__ = "db/util/last_id.db"
+
+table = PrettyTable(['ID', 'Name', 'Buying price', 'Selling price'])
 
 def addItem(params):
     last_id = getLastID()
@@ -40,6 +43,20 @@ def addItem(params):
     else:
         print("No current session, please login")
 
+def viewAll():
+    item_files = os.listdir(__item_db_location__)
+    for item_file_name in item_files:
+        item_arr = get_item_by_path(f"{__item_db_location__}/{item_file_name}")
+        table.add_row(item_arr)
+    print(table)
+
+def viewSingleItem(params):
+    item_arr = get_item_by_path(f"{__item_db_location__}/{params[0]}.db")
+    table.add_row(item_arr)
+    print(table)
+
+
+# utility functions
 
 def getLastID():
     if os.path.exists(__item_last_id__):
@@ -51,3 +68,8 @@ def getLastID():
 def updateLastID(id):
     with open(__item_last_id__, "w") as last_id_file:
         last_id_file.write(str(id))
+
+def get_item_by_path(path):
+    with open(path, "r") as item_file:
+        _data_ = json.load(item_file)
+        return [_data_["id"], _data_["name"], _data_["buyingPrice"], _data_["sellingPrice"]]
