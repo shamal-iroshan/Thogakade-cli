@@ -31,3 +31,25 @@
 ```
 --type item view <id>
 ```
+
+## Cart
+
+### Add item to cart
+```
+--type order add-cart <itemID> <qty>
+```
+
+### Clear item from cart
+```
+--type order clear-item <itemID>
+```
+
+### Clear cart
+```
+--type order clear-cart
+```
+
+### View cart
+```
+--type order view-cart
+```

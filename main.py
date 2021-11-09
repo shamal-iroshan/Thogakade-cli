@@ -1,7 +1,7 @@
-import sys
+import click
 from app.user import register, login, current
 from app.items import addItem, viewAll, viewSingleItem, deleteItem
-import click
+from app.cart import addToCart, viewCart, emptyCart
 
 @click.command()
 @click.option('--type', default='init', help='command type')
@@ -24,6 +24,13 @@ def hello(type, operation, params):
             viewSingleItem(params)
         elif operation == "delete":
             deleteItem(params)
+    elif type == "order":
+        if operation == "add-cart":
+            addToCart(params)
+        elif operation == "view-cart":
+            viewCart()
+        elif operation == "clear-cart":
+            emptyCart()
     else:
         print("Error")
 
