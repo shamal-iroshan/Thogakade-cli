@@ -2,6 +2,7 @@ import click
 from app.user import register, login, current
 from app.items import addItem, viewAll, viewSingleItem, deleteItem
 from app.cart import addToCart, viewCart, emptyCart
+from app.orders import placeOrder, viewSingleOrder, viewAllOrders, markComplete
 
 @click.command()
 @click.option('--type', default='init', help='command type')
@@ -31,6 +32,14 @@ def hello(type, operation, params):
             viewCart()
         elif operation == "clear-cart":
             emptyCart()
+        elif operation == "place-order":
+            placeOrder()
+        elif operation == "view-single-order":
+            viewSingleOrder(params)
+        elif operation == "view-all-orders":
+            viewAllOrders(params)
+        elif operation == "mark-complete":
+            markComplete(params)
     else:
         print("Error")
 
