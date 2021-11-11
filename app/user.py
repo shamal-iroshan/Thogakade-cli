@@ -19,6 +19,7 @@ def register(params):
                 }
                 with open(f"{__user_db_location__}/{params[0]}.db", "w") as user_file:
                     json.dump(_data_, user_file)
+                print("Registration succesful")
     else:
         print("check your command")
             
@@ -60,6 +61,6 @@ def current():
     if os.path.isfile(f"{__current_session_location__}/current_session.db"):
         with open(f"{__current_session_location__}/current_session.db", "r") as session_file:
             _data_ = json.load(session_file)
-            print(_data_["username"])
+            print("Current User = ", _data_["username"])
     else:
         print("No current session")

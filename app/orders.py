@@ -31,15 +31,24 @@ def placeOrder():
                         }
                         user = _data_["username"]
                         if os.path.isdir(f"{__order_db_location__}/{user}"):
-                            print(f"{__order_db_location__}/{user}/{new_id}.db")
                             with open(f"{__order_db_location__}/{user}/{new_id}.db", "w") as order_file:
                                 json.dump(order, order_file)
                                 updateLastID(new_id)
+                            open(__cart_db_location__, 'w').close()
+                            print("Order placed successfully")
                         else:
                             os.makedirs(f"{__order_db_location__}/{user}")
                             with open(f"{__order_db_location__}/{user}/{new_id}.db", "w") as order_file:
                                 json.dump(order, order_file)
                                 updateLastID(new_id)
+                            open(__cart_db_location__, 'w').close()
+                            print("Order placed successfully")
+            else:
+                print("Your cart is empty")
+        else:
+            print("You are not a customer")
+    else:
+        print("No current session")
 
 
 
@@ -51,26 +60,40 @@ def viewSingleOrder(params):
             userRole = _data_["role"]   
         if userRole == "customer":
             customerName = _data_["username"]
-            with open(f"{__order_db_location__}/{customerName}/{params[0]}.db", "r") as order_file:
-                order = json.load(order_file)
-                items = order["items"]
-                for item in items:
-                    item_arr = [item["id"], item["name"], item["sellingPrice"], item["qty"]]
-                    table.add_row(item_arr)
-                print("Order ID: ", order["id"])
-                print("Customer Name: ", customerName)
-                print(table)
+            if os.path.isfile(f"{__order_db_location__}/{customerName}/{params[0]}.db"):
+                with open(f"{__order_db_location__}/{customerName}/{params[0]}.db", "r") as order_file:
+                    order = json.load(order_file)
+                    items = order["items"]
+                    for item in items:
+                        item_arr = [item["id"], item["name"], item["sellingPrice"], item["qty"]]
+                        table.add_row(item_arr)
+                    print("Order ID: ", order["id"])
+                    if "status" in order:
+                        print("Order Status: ", order["status"])
+                    else:
+                        print("Order Status: Pending")
+                    print("Customer Name: ", customerName)
+                    print(table)
+            else:
+                print("Check ID")
         elif userRole == "admin":
             customerName = params[0]
-            with open(f"{__order_db_location__}/{customerName}/{params[1]}.db", "r") as order_file:
-                order = json.load(order_file)
-                items = order["items"]
-                for item in items:
-                    item_arr = [item["id"], item["name"], item["sellingPrice"], item["qty"]]
-                    table.add_row(item_arr)
-                print("Order ID: ", order["id"])
-                print("Customer Name: ", customerName)
-                print(table)
+            if os.path.isfile(f"{__order_db_location__}/{customerName}/{params[1]}.db"):
+                with open(f"{__order_db_location__}/{customerName}/{params[1]}.db", "r") as order_file:
+                    order = json.load(order_file)
+                    items = order["items"]
+                    for item in items:
+                        item_arr = [item["id"], item["name"], item["sellingPrice"], item["qty"]]
+                        table.add_row(item_arr)
+                    print("Order ID: ", order["id"])
+                    if "status" in order:
+                        print("Order Status: ", order["status"])
+                    else:
+                        print("Order Status: Pending")
+                    print("Customer Name: ", customerName)
+                    print(table)
+            else:
+                print("Check ID and User Name")
 
 def viewAllOrders(params):
     if os.path.isfile(__current_session_location__):
@@ -90,6 +113,10 @@ def viewAllOrders(params):
                         item_arr = [item["id"], item["name"], item["sellingPrice"], item["qty"]]
                         allTable.add_row(item_arr)
                     print("Order ID: ", order["id"])
+                    if "status" in order:
+                        print("Order Status: ", order["status"])
+                    else:
+                        print("Order Status: Pending")
                     print("Customer Name: ", customerName)
                     print(allTable)
         elif userRole == "admin":
@@ -104,6 +131,10 @@ def viewAllOrders(params):
                         item_arr = [item["id"], item["name"], item["sellingPrice"], item["qty"]]
                         table.add_row(item_arr)
                     print("Order ID: ", order["id"])
+                    if "status" in order:
+                        print("Order Status: ", order["status"])
+                    else:
+                        print("Order Status: Pending")
                     print("Customer Name: ", customerName)
                     print(table)
 
@@ -120,7 +151,9 @@ def markComplete(params):
                 order["status"] = "completed"
                 with open(f"{__order_db_location__}/{customerName}/{params[1]}.db", "w") as updated_order_file:
                     json.dump(order, updated_order_file)
-                    print("Order status updated")       
+                    print("Order status updated")
+        else:
+            print("Not Allowed")       
 
 # utility functions
 

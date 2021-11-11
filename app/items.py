@@ -35,6 +35,7 @@ def addItem(params):
                         with open(f"{__item_db_location__}/{new_id}.db", "w") as item_file:
                             json.dump(_data_, item_file)
                         updateLastID(new_id)
+                        print("Item added")
             else:
                 print("check your command")
         else:
@@ -45,15 +46,25 @@ def addItem(params):
 
 def viewAll():
     item_files = os.listdir(__item_db_location__)
-    for item_file_name in item_files:
-        item_arr = get_item_by_path(f"{__item_db_location__}/{item_file_name}")
-        table.add_row(item_arr)
-    print(table)
+    if item_files:
+        for item_file_name in item_files:
+            item_arr = get_item_by_path(f"{__item_db_location__}/{item_file_name}")
+            table.add_row(item_arr)
+        print(table)
+    else:
+        print("No Items")
 
 def viewSingleItem(params):
-    item_arr = get_item_by_path(f"{__item_db_location__}/{params[0]}.db")
-    table.add_row(item_arr)
-    print(table)
+    item_files = os.listdir(__item_db_location__)
+    if item_files:
+        if os.path.isfile(f"{__item_db_location__}/{params[0]}.db"):
+            item_arr = get_item_by_path(f"{__item_db_location__}/{params[0]}.db")
+            table.add_row(item_arr)
+            print(table)
+        else:
+            print("No item for this ID")
+    else:
+        print("No Items")
 
 def deleteItem(params):
     if os.path.isfile(__current_session_location__):

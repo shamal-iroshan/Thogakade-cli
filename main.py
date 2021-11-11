@@ -3,6 +3,7 @@ from app.user import register, login, current
 from app.items import addItem, viewAll, viewSingleItem, deleteItem
 from app.cart import addToCart, viewCart, emptyCart
 from app.orders import placeOrder, viewSingleOrder, viewAllOrders, markComplete
+from app.util import init
 
 @click.command()
 @click.option('--type', default='init', help='command type')
@@ -40,6 +41,8 @@ def hello(type, operation, params):
             viewAllOrders(params)
         elif operation == "mark-complete":
             markComplete(params)
+    elif type == "init": 
+        init()
     else:
         print("Error")
 
