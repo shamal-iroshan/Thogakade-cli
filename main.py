@@ -1,9 +1,15 @@
 import click
-from app.user import register, login, current
-from app.items import addItem, viewAll, viewSingleItem, deleteItem
-from app.cart import addToCart, viewCart, emptyCart
-from app.orders import placeOrder, viewSingleOrder, viewAllOrders, markComplete
-from app.util import init
+from app.user import User
+from app.items import Items
+from app.cart import Cart
+from app.orders import Orders
+from app.util import Util
+
+util = Util()
+cart = Cart()
+items = Items()
+orders = Orders()
+user = User()
 
 @click.command()
 @click.option('--type', default='init', help='command type')
@@ -12,37 +18,37 @@ from app.util import init
 def hello(type, operation, params): 
     if type == "user":
         if operation == "register":
-            register(params)
+            user.register(params)
         elif operation == "login":
-            login(params)
+            user.login(params)
         elif operation == "current":
-            current()
+            user.current()
     elif type == "item":
         if operation == "add":
-            addItem(params)
+            items.addItem(params)
         elif operation == "view-all":
-            viewAll()
+            items.viewAll()
         elif operation == "view":
-            viewSingleItem(params)
+            items.viewSingleItem(params)
         elif operation == "delete":
-            deleteItem(params)
+            items.deleteItem(params)
     elif type == "order":
         if operation == "add-cart":
-            addToCart(params)
+            cart.addToCart(params)
         elif operation == "view-cart":
-            viewCart()
+            cart.viewCart()
         elif operation == "clear-cart":
-            emptyCart()
+            cart.emptyCart()
         elif operation == "place-order":
-            placeOrder()
+            orders.placeOrder()
         elif operation == "view-single-order":
-            viewSingleOrder(params)
+            orders.viewSingleOrder(params)
         elif operation == "view-all-orders":
-            viewAllOrders(params)
+            orders.viewAllOrders(params)
         elif operation == "mark-complete":
-            markComplete(params)
+            orders.markComplete(params)
     elif type == "init": 
-        init()
+        util.init()
     else:
         print("Error")
 
