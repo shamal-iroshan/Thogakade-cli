@@ -47,12 +47,6 @@ init
 ```
 --type order add-cart <itemID> <qty>
 ```
-
-### Clear item from cart
-```
---type order clear-item <itemID>
-```
-
 ### Clear cart
 ```
 --type order clear-cart
